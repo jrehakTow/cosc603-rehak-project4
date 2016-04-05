@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineItemTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">VendingMachine_task1 (Apr 4, 2016 11:23:06 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine_task1</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc603.project4.vendingmachine.task1</a> &gt; <span class="el_source">VendingMachineItemTest.java</span></div><h1>VendingMachineItemTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc603.project4.vendingmachine.task1;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+// TODO: Auto-generated Javadoc
+/**
+ * The Class VendingMachineItemTest.
+ * @author James Rehak
+ */
+<span class="fc" id="L14">public class VendingMachineItemTest {</span>
+	
+	/** Declare vending machine item object The coke. */
+	VendingMachineItem coke;
+	
+	/** Declare vending machine item object The pesi. */
+	VendingMachineItem pesi;
+	
+	/** Declare vending machine item object The null name. */
+	VendingMachineItem nullName;
+	
+	/** Declare vending machine item object The empty name. */
+	VendingMachineItem emptyName;
+	
+	/** Declare vending machine item object The white space. */
+	VendingMachineItem whiteSpace;
+
+	/**
+	 * Instantiate the coke item object
+	 *
+	 * @throws Exception the exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L38">		coke = new VendingMachineItem(&quot;coke&quot;, 1.50);</span>
+<span class="fc" id="L39">	}</span>
+
+	/**
+	 * Tear down. Set coke item object to null. 
+	 *
+	 * @throws Exception the exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L48">		coke = null;</span>
+<span class="fc" id="L49">	}</span>
+
+	/**
+	 * Test vending machine item.
+	 * Assert coke object created.
+	 */
+	@Test
+	public void testVendingMachineItem() {
+<span class="fc" id="L57">		assertNotNull(coke);</span>
+<span class="fc" id="L58">	}</span>
+	
+	/**
+	 * Test vending machine item1 less than zero.
+	 * Attempt creation of item with negative price
+	 * Assert item with negative price not created.
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testVendingMachineItem1LessThanZero() {
+<span class="nc" id="L67">		pesi = new VendingMachineItem(&quot;pesi&quot;, -1);</span>
+<span class="nc" id="L68">		assertNull(pesi);</span>
+<span class="nc" id="L69">	}</span>
+	
+	/**
+	 * Test vending machine item2 null name.
+	 * Attempt creation of item with name set to null.
+	 * Assert item not created.
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testVendingMachineItem2NullName() {
+<span class="nc" id="L78">		nullName = new VendingMachineItem(null, 1);</span>
+<span class="nc" id="L79">		assertNull(nullName);</span>
+<span class="nc" id="L80">	}</span>
+	
+	/**
+	 * Test vending machine item3 no name.
+	 * Attempt creation of item with empty name.
+	 * Assert item not created. 
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testVendingMachineItem3NoName() {
+<span class="nc" id="L89">		emptyName = new VendingMachineItem(&quot;&quot;, 1);</span>
+<span class="nc" id="L90">		assertNull(emptyName);</span>
+<span class="nc" id="L91">	}</span>
+	
+	/**
+	 * Test vending machine item4 whitespace.
+	 * Attempt creation of item with name set to space character
+	 * Assert item not created. 
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testVendingMachineItem4Whitespace() {
+<span class="nc" id="L100">		whiteSpace = new VendingMachineItem(&quot; &quot;, 1);</span>
+<span class="nc" id="L101">		assertNull(whiteSpace);</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Test get name.
+	 * Assert name equals the name set to the object. 
+	 */
+	@Test
+	public void testGetName() {
+<span class="fc" id="L110">		assertEquals(&quot;coke&quot;, coke.getName());</span>
+<span class="fc" id="L111">	}</span>
+
+	/**
+	 * Test get price.
+	 * Assert getPrice gets the correct price. 
+	 */
+	@Test
+	public void testGetPrice() {
+<span class="fc" id="L119">		assertEquals(1.50, coke.getPrice(), 0.0);</span>
+<span class="fc" id="L120">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>VendingMachine_task1 (Apr 4, 2016 11:23:06 PM)</div></body></html>
