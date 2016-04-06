@@ -1,6 +1,7 @@
 package edu.towson.cis.cosc603.project4.vendingmachine;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,6 +12,28 @@ import static org.junit.Assert.*;
  * @version $Revision: 1.0 $
  */
 public class VendingMachineTest {
+	
+	/** The soda pop machine. */
+	VendingMachine sodaPopMachine; 
+	
+	/** The coke. */
+	//declare items for vending machine
+	VendingMachineItem coke;
+	
+	/** The pesi. */
+	VendingMachineItem pesi;
+	
+	/** The dr pepper. */
+	VendingMachineItem drPepper;
+	
+	/** The jolt. */
+	VendingMachineItem jolt;
+	
+	/** The code. */
+	String[] code = {"A", "B", "C", "D"};
+	
+	/** The soda. */
+	VendingMachineItem[] soda;
 	/**
 	 * Run the VendingMachine() constructor test.
 	 *
@@ -107,6 +130,18 @@ public class VendingMachineTest {
 		fixture.addItem(item, code);
 
 		// add additional test code here
+	}
+	
+	/**
+	 * Test add item2 slot occupied.
+	 * Precondition: Failed, slot to be used is occupied.
+	 * Postcondition: Assert original item not replaced. 
+	 */
+	@Test(expected = VendingMachineException.class)
+	public void testAddItem2SlotOccupied() {
+		//add too many times
+		sodaPopMachine.addItem(jolt, "A");	
+		assertSame(coke, sodaPopMachine.getItem("A"));
 	}
 
 	/**
@@ -285,6 +320,43 @@ public class VendingMachineTest {
 		// add additional test code here
 		assertTrue(result);
 	}
+	
+	/**
+	 * Test make purchase2 out of stock. Attempt purchase of out of stock item
+	 * Precondition: Failed, no item in slot. 
+	 * Postcondition: Assert purchase fails. 
+	 */
+	@Test
+	public void testMakePurchase_5_OutofStock() {
+		//failure out of stock
+		sodaPopMachine.balance = 3.99;
+		assertFalse(sodaPopMachine.makePurchase("D"));	
+	}
+	
+	/**
+	 * Test make purchase4 higher balance.
+	 * Precondition: Fulfilled, balance above item price
+	 * Postcondition: Assert purchase succeeds. Assert new correct balance. 
+	 */
+	@Test
+	public void testMakePurchase_6_HigherBalance() {
+		//failure out of stock
+		sodaPopMachine.balance = 2.00;
+		assertTrue(sodaPopMachine.makePurchase("A"));
+		assertEquals(0.50, sodaPopMachine.balance, 0.0);
+	}
+	
+	/**
+	 * Test make purchase1 no balance. Not enough money to make purchase.
+	 * Precondition: Failed, vending machine balance under item price.
+	 * Postcondition: Assert purchase fails. 
+	 */
+	@Test
+	public void testMakePurchase_7_NoBalance() {
+		//failure not enough money
+		sodaPopMachine.balance = 0;
+		assertFalse(sodaPopMachine.makePurchase("A"));
+	}
 
 	/**
 	 * Run the VendingMachineItem removeItem(String) method test.
@@ -344,6 +416,17 @@ public class VendingMachineTest {
 
 		// add additional test code here
 		assertNotNull(result);
+		assertSame(result, fixture.removeItem(code));
+	}
+	
+	/**
+	 * Test remove item.
+	 * Precondition: Fulfilled, Item in slot.
+	 * Postcondition: Assert item is removed. 
+	 */
+	@Test
+	public void testRemoveItem_4() {
+		assertSame(coke, sodaPopMachine.removeItem("A")); 
 	}
 
 	/**
@@ -377,6 +460,19 @@ public class VendingMachineTest {
 	public void setUp()
 		throws Exception {
 		// add additional set up code here
+		sodaPopMachine = new VendingMachine();
+		coke = new VendingMachineItem("coke", 1.50);
+		pesi = new VendingMachineItem("pesi", 1.25);
+		drPepper = new VendingMachineItem("Dr. Pepper", 1.34);
+		jolt = new VendingMachineItem("jolt", 3.99);
+		
+		VendingMachineItem[] soda = {coke, pesi, drPepper, jolt};
+		this.soda = soda;
+		
+		//add items
+		sodaPopMachine.addItem(coke, "A");
+		sodaPopMachine.addItem(pesi, "B");
+		sodaPopMachine.addItem(drPepper, "C");
 	}
 
 	/**
@@ -391,6 +487,10 @@ public class VendingMachineTest {
 	public void tearDown()
 		throws Exception {
 		// Add additional tear down code here
+		sodaPopMachine = null;
+		for(int i = 0; i<soda.length; i++){
+			soda[i] = null;
+		}
 	}
 
 	/**
